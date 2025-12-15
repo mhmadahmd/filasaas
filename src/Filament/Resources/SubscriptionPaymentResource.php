@@ -3,9 +3,11 @@
 namespace Mhmadahmd\Filasaas\Filament\Resources;
 
 use BackedEnum;
+use Filament\Actions;
 use Filament\Forms;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Mhmadahmd\Filasaas\Filament\Actions\ApprovePaymentAction;
@@ -17,7 +19,7 @@ class SubscriptionPaymentResource extends Resource
 {
     protected static ?string $model = SubscriptionPayment::class;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-banknotes';
+    protected static string | BackedEnum | null $navigationIcon = Heroicon::CreditCard;
 
     protected static string|UnitEnum|null $navigationGroup = 'Billing';
 
@@ -140,12 +142,12 @@ class SubscriptionPaymentResource extends Resource
             ->recordActions([
                 ApprovePaymentAction::make()
                     ->visible(fn (SubscriptionPayment $record) => $record->requires_approval && $record->isPending()),
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Actions\ViewAction::make(),
+                Actions\EditAction::make(),
             ])
             ->toolbarActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\BulkAction::make('approve')
+                Actions\BulkActionGroup::make([
+                    Actions\BulkAction::make('approve')
                         ->label('Approve Selected')
                         ->icon('heroicon-o-check-circle')
                         ->color('success')
@@ -158,7 +160,7 @@ class SubscriptionPaymentResource extends Resource
                             }
                         })
                         ->deselectRecordsAfterCompletion(),
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

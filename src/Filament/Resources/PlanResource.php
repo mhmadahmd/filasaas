@@ -3,8 +3,11 @@
 namespace Mhmadahmd\Filasaas\Filament\Resources;
 
 use BackedEnum;
+use Filament\Actions;
+use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Resources\Resource;
+use Filament\Schemas;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables;
@@ -17,15 +20,15 @@ class PlanResource extends Resource
 {
     protected static ?string $model = Plan::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTag;
+    protected static string | BackedEnum | null $navigationIcon = Heroicon::Tag;
 
-    protected static string|UnitEnum|null $navigationGroup = 'Billing';
+    protected static string | UnitEnum | null $navigationGroup = 'Billing';
 
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
-                Forms\Components\Section::make('Basic Information')
+                Schemas\Components\Section::make('Basic Information')
                     ->schema([
                         Forms\Components\TextInput::make('name')
                             ->label('Name')
@@ -39,7 +42,7 @@ class PlanResource extends Resource
                             ->default(true),
                     ]),
 
-                Forms\Components\Section::make('Pricing')
+                Schemas\Components\Section::make('Pricing')
                     ->schema([
                         Forms\Components\TextInput::make('price')
                             ->label('Price')
@@ -61,7 +64,7 @@ class PlanResource extends Resource
                             ->required(),
                     ]),
 
-                Forms\Components\Section::make('Billing Period')
+                Schemas\Components\Section::make('Billing Period')
                     ->schema([
                         Forms\Components\TextInput::make('invoice_period')
                             ->label('Invoice Period')
@@ -80,7 +83,7 @@ class PlanResource extends Resource
                             ->required(),
                     ]),
 
-                Forms\Components\Section::make('Trial Period')
+                Schemas\Components\Section::make('Trial Period')
                     ->schema([
                         Forms\Components\TextInput::make('trial_period')
                             ->label('Trial Period')
@@ -97,7 +100,7 @@ class PlanResource extends Resource
                             ->default('day'),
                     ]),
 
-                Forms\Components\Section::make('Gateway Settings')
+                Schemas\Components\Section::make('Gateway Settings')
                     ->schema([
                         Forms\Components\Toggle::make('cash_auto_approve')
                             ->label('Auto-approve Cash Payments')
@@ -116,7 +119,7 @@ class PlanResource extends Resource
                             ->label('PayPal Plan ID'),
                     ]),
 
-                Forms\Components\Section::make('Advanced')
+                Schemas\Components\Section::make('Advanced')
                     ->schema([
                         Forms\Components\TextInput::make('sort_order')
                             ->label('Sort Order')
@@ -162,26 +165,26 @@ class PlanResource extends Resource
                     ->label('Active'),
             ])
             ->recordActions([
-                Tables\Actions\Action::make('activate')
+                Action::make('activate')
                     ->label('Activate')
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
                     ->requiresConfirmation()
                     ->action(fn (Plan $record) => $record->activate())
                     ->visible(fn (Plan $record) => ! $record->is_active),
-                Tables\Actions\Action::make('deactivate')
+                Action::make('deactivate')
                     ->label('Deactivate')
                     ->icon('heroicon-o-x-circle')
                     ->color('danger')
                     ->requiresConfirmation()
                     ->action(fn (Plan $record) => $record->deactivate())
                     ->visible(fn (Plan $record) => $record->is_active),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Actions\EditAction::make(),
+                Actions\DeleteAction::make(),
             ])
             ->toolbarActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

@@ -80,9 +80,22 @@ class User extends Authenticatable
 }
 ```
 
-### 2. Register Filament Resources
+### 2. Register the Plugin
 
-The resources are automatically registered. Access them through your Filament admin panel.
+Register the plugin in your Filament panel provider (e.g., `app/Providers/Filament/AdminPanelProvider.php`):
+
+```php
+use Mhmadahmd\Filasaas\FilasaasPlugin;
+
+public function panel(Panel $panel): Panel
+{
+    return $panel
+        // ... other panel configuration
+        ->plugin(FilasaasPlugin::make());
+}
+```
+
+**Important:** Use `->plugin()` (singular) and pass the plugin instance directly, not an array.
 
 ### 3. Create a Plan
 

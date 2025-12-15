@@ -3,9 +3,12 @@
 namespace Mhmadahmd\Filasaas\Filament\Resources;
 
 use BackedEnum;
+use Filament\Actions;
+use Filament\Actions\Action;
 use Filament\Forms;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Mhmadahmd\Filasaas\Filament\Resources\SubscriptionResource\Pages;
@@ -16,7 +19,7 @@ class SubscriptionResource extends Resource
 {
     protected static ?string $model = Subscription::class;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static string | BackedEnum | null $navigationIcon = Heroicon::ReceiptPercent;
 
     protected static string|UnitEnum|null $navigationGroup = 'Billing';
 
@@ -109,18 +112,18 @@ class SubscriptionResource extends Resource
                     ->relationship('plan', 'name'),
             ])
             ->recordActions([
-                Tables\Actions\Action::make('cancel')
+                Action::make('cancel')
                     ->label('Cancel')
                     ->icon('heroicon-o-x-circle')
                     ->color('danger')
                     ->requiresConfirmation()
                     ->action(fn (Subscription $record) => $record->cancel()),
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Actions\ViewAction::make(),
+                Actions\EditAction::make(),
             ])
             ->toolbarActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

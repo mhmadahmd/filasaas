@@ -2,8 +2,8 @@
 
 namespace Mhmadahmd\Filasaas\Filament\Actions;
 
+use Filament\Actions\Action;
 use Filament\Notifications\Notification;
-use Filament\Tables\Actions\Action;
 use Mhmadahmd\Filasaas\Models\SubscriptionPayment;
 
 class ApprovePaymentAction extends Action

@@ -3,9 +3,11 @@
 namespace Mhmadahmd\Filasaas\Filament\Resources;
 
 use BackedEnum;
+use Filament\Actions;
 use Filament\Forms;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Mhmadahmd\Filasaas\Filament\Resources\FeatureResource\Pages;
@@ -16,7 +18,7 @@ class FeatureResource extends Resource
 {
     protected static ?string $model = Feature::class;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-sparkles';
+    protected static string | BackedEnum | null $navigationIcon = Heroicon::Sparkles;
 
     protected static string|UnitEnum|null $navigationGroup = 'Billing';
 
@@ -91,12 +93,12 @@ class FeatureResource extends Resource
                     ->relationship('plan', 'name'),
             ])
             ->recordActions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Actions\EditAction::make(),
+                Actions\DeleteAction::make(),
             ])
             ->toolbarActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Actions\BulkActionGroup::make([
+                    Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
