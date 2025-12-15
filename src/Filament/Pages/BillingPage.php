@@ -6,9 +6,10 @@ use BackedEnum;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Mhmadahmd\Filasaas\Models\Plan;
 use Mhmadahmd\Filasaas\Services\TenantBillingProvider;
 
@@ -16,7 +17,9 @@ class BillingPage extends Page implements HasForms
 {
     use InteractsWithForms;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-credit-card';
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCreditCard;
+
+    protected static string|BackedEnum|null $activeNavigationIcon = Heroicon::CreditCard;
 
     protected string $view = 'filasaas::pages.billing';
 
@@ -31,9 +34,9 @@ class BillingPage extends Page implements HasForms
         $this->form->fill();
     }
 
-    public function form(Form $form): Form
+    public function form(Schema $schema): Schema
     {
-        return $form
+        return $schema
             ->schema([
                 Select::make('plan_id')
                     ->label('Select Plan')
