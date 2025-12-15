@@ -32,7 +32,6 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->index(['subscriber_type', 'subscriber_id']);
             $table->index('plan_id');
             $table->index('stripe_id');
             $table->index('paypal_subscription_id');
