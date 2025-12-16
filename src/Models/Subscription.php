@@ -2,6 +2,7 @@
 
 namespace Mhmadahmd\Filasaas\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -14,6 +15,7 @@ use Mhmadahmd\Filasaas\Traits\HasTranslations;
 class Subscription extends Model
 {
     use BelongsToPlan;
+    use HasFactory;
     use HasSlug;
     use HasTranslations;
     use SoftDeletes;

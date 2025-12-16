@@ -3,12 +3,14 @@
 namespace Mhmadahmd\Filasaas\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Mhmadahmd\Filasaas\Traits\HasTranslations;
 
 class Feature extends Model
 {
+    use HasFactory;
     use HasTranslations;
 
     protected $table = 'filasaas_plan_features';

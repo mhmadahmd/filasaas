@@ -84,13 +84,9 @@ class PaymentGatewayManager
         $allowedGateways = $plan->getAllowedGateways();
         $available = [];
 
-        // If no gateways are explicitly allowed, check if plan has any set in database
-        // If the plan's allowed_payment_gateways is null/empty, use all enabled gateways
-        $planGateways = $plan->allowed_payment_gateways;
-        $useAllEnabled = empty($planGateways) || ! is_array($planGateways);
-
-        if ($useAllEnabled) {
-            // If plan has no specific gateways set, show all enabled gateways
+        // If no gateways are allowed, return empty array
+        if (empty($allowedGateways) || ! is_array($allowedGateways)) {
+            // If plan has no gateways set, show all enabled gateways as fallback
             foreach ($this->gateways as $identifier => $gateway) {
                 $configKey = "filasaas.gateways.{$identifier}.enabled";
                 // Cash gateway is always available if enabled (defaults to true)
@@ -113,23 +109,13 @@ class PaymentGatewayManager
             $gateway = $this->get($gatewayIdentifier);
             
             // Skip if gateway is not registered
+            // If gateway is registered, it means it passed the enabled check during registration
             if (! $gateway) {
                 continue;
             }
 
-            // For cash gateway, always include if it's in allowed gateways and enabled
-            if ($gatewayIdentifier === 'cash') {
-                if (config('filasaas.gateways.cash.enabled', true)) {
-                    $available[$gatewayIdentifier] = $gateway;
-                }
-                continue;
-            }
-
-            // For other gateways, check if they're enabled in config
-            $configKey = "filasaas.gateways.{$gatewayIdentifier}.enabled";
-            if (config($configKey, false)) {
-                $available[$gatewayIdentifier] = $gateway;
-            }
+            // If gateway is registered, it's available (registration already checked if it's enabled)
+            $available[$gatewayIdentifier] = $gateway;
         }
 
         return $available;
